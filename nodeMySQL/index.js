@@ -15,17 +15,31 @@ app.get('/', (req, res)=>{
     res.end('ulandi');
 })
 
-app.get('/addUser', (req, res)=>{
 
-    const addUserSql = "delete customers where id='6' ";
+
+app.post('/addUser', (req, res)=>{
+
+    const addUserSql = "INSERT INTO customers FROM SET id='7', name='Abdulvoris', age='20', address='Zarbdor', salary='10000000' ";
 
     connection.query(addUserSql, function(err, results){
         if(err) throw err;
         console.log(results);
     });
 
-    res.end('user o`chrildi' +' '+ addUserSql);
-})
+    res.end('user qo`shildi' +' '+ addUserSql);
+});
+
+app.delete('/deleteUser', (req, res)=>{
+
+    const deleteUserSql = "delete customers where id='6' ";
+
+    connection.query(deleteUserSql, function(err, results){
+        if(err) throw err;
+        console.log(results);
+    });
+
+    res.end('user o`chrildi' +' '+ deleteUserSql);
+});
 
 const port = 6969;
 
