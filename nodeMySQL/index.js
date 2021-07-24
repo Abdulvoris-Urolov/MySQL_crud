@@ -15,8 +15,6 @@ app.get('/', (req, res)=>{
     res.end('ulandi');
 })
 
-
-
 app.post('/addUser', (req, res)=>{
 
     const addUserSql = "INSERT INTO customers FROM SET id='7', name='Abdulvoris', age='20', address='Zarbdor', salary='10000000' ";
@@ -27,6 +25,18 @@ app.post('/addUser', (req, res)=>{
     });
 
     res.end('user qo`shildi' +' '+ addUserSql);
+});
+
+app.put('/updateUser', (req, res)=>{
+
+    const updateUserSql = "UPDATE customers FROM SET  name='Abdulvahob', age='23', address='Zarbdor', salary='20000000' ";
+
+    connection.query(updateUserSql, function(err, results){
+        if(err) throw err;
+        console.log(results);
+    });
+
+    res.end('user qo`shildi' +' '+ updateUserSql);
 });
 
 app.delete('/deleteUser', (req, res)=>{
@@ -44,5 +54,5 @@ app.delete('/deleteUser', (req, res)=>{
 const port = 6969;
 
 app.listen(port, ()=>{
-    console.log(`${port}sfdfdsfd`);
+    console.log(`${port}-port ishlayabdi..`);
 })
