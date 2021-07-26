@@ -1,7 +1,8 @@
+const { response } = require('express');
 const express = require('express');
 const app = express();
 const mysql = require('mysql2');
-// const bodyparser = require('body-parser');
+const bodyparser = require('body-parser');
 //const Connection = require('mysql2/typings/mysql/lib/Connection');
 
 // app.use(bodyparser.json);
@@ -53,29 +54,23 @@ app.delete('/customers/:id', (req, res)=>{
 });
 
 app.post('/customers', (req, res)=>{
-    const sql = "INSERT INTO `customers`( `name`, `age`, `address`, `salary`)VALUES('')";
-    
-    connection.query(sql,(error, results)=>{
-        if(error){
-            console.log(error);
-        }else{
-            response.status(results,res);
-        }
-    });
+    const sql = [req.body.id, req.body.name, req.body.age, req.body.adress, req.body.salary];
 
+    connection.query('INSERT INTO CUSTOMERS(ID,NAME,AGE,ADDRESS,SALARY) VALUES(?,?,?,?,?)', sql, (err, results, fields)=>{
+    !err ? res.json(results):res.json(err);
+    });
 });
 
-// app.post('/addUser', (req, res)=>{
+app.post('/addUser', (req, res)=>{
+    const addUserSql = "INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)VALUES (10, 'Abdurashid', 20, 'Zarbdor', 200000 );";
 
-//     const addUserSql = "INSERT INTO customers FROM SET id='7', name='Abdulvoris', age='20', address='Zarbdor', salary='10000000' ";
+    connection.query(addUserSql, function(err, results){
+        if(err) throw err;
+        console.log(results);
+    });
 
-//     connection.query(addUserSql, function(err, results){
-//         if(err) throw err;
-//         console.log(results);
-//     });
-
-//     res.end('user qo`shildi' +' '+ addUserSql);
-// });
+    console.log(addUserSql);
+});
 
 // app.put('/updateUser', (req, res)=>{
 
@@ -89,17 +84,6 @@ app.post('/customers', (req, res)=>{
 //     res.end('user qo`shildi' +' '+ updateUserSql);
 // });
 
-// app.delete('/deleteUser', (req, res)=>{
-
-//     const deleteUserSql = "delete customers where id='6' ";
-
-//     connection.query(deleteUserSql, function(err, results){
-//         if(err) throw err;
-//         console.log(results);
-//     });
-
-//     res.end('user o`chrildi' +' '+ deleteUserSql);
-// });
 
 const port = 2000;
 
